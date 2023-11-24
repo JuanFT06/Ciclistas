@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Lista de usuarios</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"><!--  -->
+        <!--     <link th:href="@{/styles.css}" rel="stylesheet" />-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    </head>
+    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <div class="container mt-4" layout:fragment="body" style="min-height: 500px">
+            <div class="row jutify-content-center mb-4">
+
+
+
+                <div class="text-center">
+                    <button  class="btn btn-success" onclick="guardarCiclistas()"><i class="bi bi-person-workspace"></i>+ Agregar</button>
+                    <a th:href="@{/ciclistas/all}" class="btn btn-success">Ver guardados</a>
+                </div>
+
+                <div class="row col-12 mt-5">
+                    <table  class="table table-striped mr-8">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Direccion</th>
+                                <th>Edad</th>
+                                <th>Nivel</th>
+                                <th>Membresia</th>
+                                <th>Guardar</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="contenido">
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<div id="modalAdd" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModal">Agregar Empleado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="offset-3 col-6" id="containerNomina">
+                    <label class="mb-2">Numero de nomina</label>
+                    <label  id="lblNomia"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="bi bi-person-circle"></i></div>
+                        </div>
+                        <input type="text" placeholder="Nomina"   
+                               id="txtNomina"
+                               class="form-control mb-4 col-4">                       
+                    </div>
+
+                </div>
+
+                <div class="offset-3 col-6">
+                    <label class="mb-2">Nombre</label>
+                    <label  id="lblNombre"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="bi bi-person-circle"></i></div>
+                        </div>
+                        <input type="text" placeholder="Nombre"   
+                               id="txtNombre"
+                               class="form-control mb-4 col-4">                       
+                    </div>
+
+                </div>
+                <div class="offset-3 col-6">
+                    <label class="mb-2">Apellido Paterno</label>
+                    <label id="lblApellidoPaterno"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="bi bi-person-circle"></i></div>
+                        </div>
+                        <input type="text"  placeholder="Apellido paterno" id="txtApellidoPaterno"
+                               class="form-control mb-4 col-4" > 
+                    </div>
+                </div>
+                <div class="offset-3 col-6">
+                    <label class="mb-2">Apellido Materno</label>
+                    <label id="lblApellidoMaterno"></label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="bi bi-person-circle"></i></div>
+                        </div>
+                        <input type="text"  placeholder="Apellido materno" id="txtApellidoMaterno"
+                               class="form-control mb-4 col-4" > 
+                    </div>
+                </div>
+
+                <div class="offset-3 col-6">
+                    <label class="mb-2">Estado</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="bi bi-building"></i></div>
+                        </div>
+                        <select id="ddlestado" required  class="form-control mb-4">
+                            <option value="0">Selleciona una estado</option>                           
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="botonModal" onclick="addUser()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" tabindex="-1" id="modalDelete">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Seguro que quieres eliminar este usuario?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" onclick="deleteUser()">delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    var update = false;
+    var idempleado = 0;
+    $(document).ready(function () {
+        getAll();
+
+    });
+
+    function guardarCiclistas() {
+        var lista = [];
+        $('#contenido tr').each(function () {
+            var checkbox = $(this).find('.checkbox');
+            if (checkbox.prop('checked')) {
+                var ciclista = {
+                    nombre: $(this).find('td:eq(0)').text(),
+                    direccion: $(this).find('td:eq(1)').text(),
+                    edad: parseInt($(this).find('td:eq(2)').text()),
+                    // Agrega más propiedades según tus datos
+
+                    nivel: {
+                        descripcion: $(this).find('td:eq(3)').text()
+                    },
+                    membresiaActiva: ($(this).find('td:eq(4)').text() == 'true') ? 1 : 0
+                };
+
+                $.ajax({
+                    url: "http://localhost:8080/api/ciclistas",
+                    type: 'post',
+                    data: JSON.stringify(ciclista),
+                    Accept: "application/json",
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function (data) {
+                        alert("Empleado actualizado");
+                        $("#modalAdd").modal("hide");
+                        getAll();
+                    },
+                    error: function () {
+                        // Muestra el mensaje de error en caso de error en la petición
+                        alert("Error al actualizar");
+                        $("#modalAdd").modal("hide");
+                    }
+                });
+                lista.push(ciclista);
+            }
+        });
+        console.log(lista);
+    }
+
+    function getAll() {
+
+        $.ajax({
+            url: "https://ciclistastest.azurewebsites.net/Ciclistas",
+            dataType: "json",
+            success: function (data) {
+
+                var resultsContainer = $("#contenido");
+                resultsContainer.empty();
+                var ciclistas = data;
+                $.each(ciclistas, function (index, ciclista) {
+                    var card = `
+                        <tr id="fila${index}"<>
+                                
+                                <td class="card-text">${ciclista.nombre}</td>
+                                <td class="card-title">${ciclista.direccion}</td>
+                                
+                                <td class="card-text">${ciclista.edad}</td>
+                                <td class="card-text">${ciclista.nivel}</td>
+                                 <td class="card-text">${ciclista.membresiaActiva}</td>
+                                <td><input type="checkbox" class="checkbox"></td>
+                        </tr>
+                    `;
+
+                    resultsContainer.append(card);
+                });
+                $("#errorContainer").hide();
+
+            }
+        });
+    }
+
+  
+
+
+
+
+
+</script>
+</html>
