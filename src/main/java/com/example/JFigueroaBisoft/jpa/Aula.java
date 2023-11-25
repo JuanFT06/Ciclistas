@@ -9,9 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,27 +21,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name="ciclista")
-public class Ciclista {
+public class Aula {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idciclista")
+    @Column(name="idaula")
     private int id;
     
     private String nombre;
     
-    private String direccion;
-    
-    private int edad;
-    
-    @Column(name="membresiaactiva")
-     private boolean membresiaActiva;
-   
-    @ManyToOne
-    @JoinColumn(name="idnivel")
-    private Nivel nivel;
-    
-    @ManyToOne
-    @JoinColumn(name="idclase")
-    private Clase clase;
 }

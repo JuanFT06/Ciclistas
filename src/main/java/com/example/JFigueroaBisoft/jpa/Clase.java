@@ -11,10 +11,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import java.util.Date;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 /**
  *
@@ -24,27 +27,23 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name="ciclista")
-public class Ciclista {
+public class Clase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idciclista")
+    @Column(name="idclase")
     private int id;
     
     private String nombre;
-    
-    private String direccion;
-    
-    private int edad;
-    
-    @Column(name="membresiaactiva")
-     private boolean membresiaActiva;
+
+    private String horario;
    
+    private boolean activa;
+    
     @ManyToOne
     @JoinColumn(name="idnivel")
     private Nivel nivel;
     
     @ManyToOne
-    @JoinColumn(name="idclase")
-    private Clase clase;
+    @JoinColumn(name="idaula")
+    private Aula aula;
 }
