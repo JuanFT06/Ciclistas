@@ -5,6 +5,7 @@
 package com.example.JFigueroaBisoft.dao;
 
 import com.example.JFigueroaBisoft.jpa.Clase;
+import java.util.List;
 import org.springframework.data.repository.ListCrudRepository;
 
 /**
@@ -15,4 +16,6 @@ public interface IClaseDAO  extends ListCrudRepository<Clase, Integer>{
     
     
     Clase findByHorarioEquals(String horario);
+    
+    List<Clase> findAllByNivelId(int id);
 }

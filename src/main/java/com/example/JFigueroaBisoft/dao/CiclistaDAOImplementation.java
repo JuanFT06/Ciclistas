@@ -45,6 +45,10 @@ public class CiclistaDAOImplementation {
         return this.repository.findAll();
     }
     
+    public List<Ciclista> getAllByNivel(int id){
+        return this.repository.findAllByNivelIdAndMembresiaActivaTrueAndClaseNull(id);
+    }
+    
     public List<Ciclista> getByName(String name){
         return this.repository.findAllByNombreContainingIgnoreCase(name);
     }

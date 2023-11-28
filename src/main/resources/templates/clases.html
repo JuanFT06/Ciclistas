@@ -12,6 +12,35 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <!--     <link th:href="@{/styles.css}" rel="stylesheet" />-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     </head>
+    <header class="p-2 mb-5">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light p-2">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <p  class="nav-link text-white" >CicloStudio</p>
+                    </li>
+                    <li class="nav-item active">
+                        <a th:href="@{/ciclistas}" class="nav-link text-white" >Todos los ciclistas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/ciclistas/all}" class="nav-link text-white" >Ciclistas guardados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/clases}" class="nav-link text-white" >Clases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/clases/all}" class="nav-link text-white" >Administrar clases</a>
+                    </li>
+                   
+                </ul>
+            </div>
+                  
+
+        </nav>
+    </header>
     <body>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -19,11 +48,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <div class="row jutify-content-center mb-4">
 
                 <div class="text-center">
-
-                    <a th:href="@{/ciclistas}" class="btn btn-info">Ver todos</a>
+                     <button  class="btn btn-success" onclick="showModal()"><i class="bi bi-person-workspace"></i>+ Agregar</button>
                 </div>
 
-            
+
                 <div class="row col-12 mt-5">
                     <table  class="table table-striped mr-8">
                         <thead>
@@ -42,10 +70,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                         </tbody>
                     </table>
-
                 </div>
-
-
             </div>
 
         </div>
@@ -61,7 +86,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             </div>
             <div class="modal-body">
 
-                <div class="offset-3 col-6" id="containerNomina">
+                <div class="offset-3 col-6">
                     <label class="mb-2">Nombre</label>
                     <label  id="lblNombre"></label>
                     <div class="input-group">
@@ -76,28 +101,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </div>
 
                 <div class="offset-3 col-6">
-                    <label class="mb-2">Direccion</label>
-                    <label  id="lblNombre"></label>
+                    <label class="mb-2">Horario</label>
+                    <label  id="lblHorario"></label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="bi bi-person-circle"></i></div>
                         </div>
-                        <input type="text" placeholder="Direccion"   
-                               id="txtDireccion"
+                        <input type="text" placeholder="10:00am-11:00am"   
+                               id="txtHorario"
                                class="form-control mb-4 col-4">                       
                     </div>
 
-                </div>
-                <div class="offset-3 col-6">
-                    <label class="mb-2">Edad</label>
-                    <label id="lblApellidoPaterno"></label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text"><i class="bi bi-person-circle"></i></div>
-                        </div>
-                        <input type="text"  placeholder="Apellido paterno" id="txtEdad"
-                               class="form-control mb-4 col-4" > 
-                    </div>
                 </div>
 
                 <div class="offset-3 col-6">
@@ -110,28 +124,30 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <option value="0">Selleciona un nivel</option> 
                             <option value="1">Novato</option> 
                             <option value="2">Intermedio</option> 
-                            <option value="3">Experto</option> 
+                            <option value="3">Avanzado</option> 
                         </select>
                     </div>
                 </div>
 
                 <div class="offset-3 col-6">
-                    <label class="mb-2">Membresia</label>
+                    <label class="mb-2">Aula</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="bi bi-building"></i></div>
                         </div>
-                        <select id="ddlMembresia" required  class="form-control mb-4">
-                            <option value="#">Selleciona un nivel</option> 
-                            <option value="0">Inactiva</option> 
-                            <option value="1">Activa</option> 
+                        <select id="ddlAula" required  class="form-control mb-4">
+                            <option value="0">Seleciona un aula</option> 
+                            <option value="1">C1</option> 
+                            <option value="2">C2</option>          
                         </select>
                     </div>
                 </div>
+
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="botonModal" onclick="addUser()">Guardar</button>
+                <button type="button" class="btn btn-primary" id="botonModal" onclick="addClase()">Guardar</button>
             </div>
         </div>
     </div>
@@ -140,15 +156,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title">Eliminar clase</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Seguro que quieres eliminar este ciclista?</p>
+                <p>Seguro que quieres eliminar esta clase?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" onclick="deleteUser()">delete</button>
+                <button type="button" class="btn btn-danger" onclick="deleteClase()">delete</button>
             </div>
         </div>
     </div>
@@ -158,7 +174,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 <script>
 
     var update = false;
-    var idciclista = 0;
+    var idclase = 0;
     $(document).ready(function () {
         getAll();
 
@@ -208,88 +224,107 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     }
 
     function showModal() {
-        update = false
-        $("#txtNomina").val('')
+         $("#modalAdd").modal("show");
         $("#txtNombre").val('')
-        $("#txtApellidoPaterno").val('')
-        $("#txtApellidoMaterno").val('')
-        $("#ddlestado").val('');
-        $("#modalAdd").modal("show");
-        $("#tituloModal").text("Registrar empleado")
+        $("#txtHorario").val('')
+        $("#ddlNivel").val(0);
+        $("#ddlAula").val(0);
         $("#botonModal").text("Guardar")
+        $("#tituloModal").text("Agregar Clase")
     }
 
     function showModalUpdate(id) {
+         $("#modalAdd").modal("show");
         $("#tituloModal").text("Actualizar ciclista")
         $("#botonModal").text("Actualizar")
-        idciclista = id;
+        idclase = id;
         update = true;
         $.ajax({
-            url: "http://localhost:8080/api/ciclistas/" + id,
+            url: "http://localhost:8080/api/clases/" + id,
             type: "get",
             accept: "application/json",
             dataType: "json",
             success: function (data) {
                 $("#txtNombre").val(data.nombre)
-                $("#txtDireccion").val(data.direccion)
-                $("#txtEdad").val(data.edad)
+                $("#txtHorario").val(data.horario)
                 $("#ddlNivel").val(data.nivel.id);
-                $("#ddlMembresia").val(((data.membresiaActiva) ? 1 : 0));
-                console.log($("#ddlMembresia").val());
+                $("#ddlAula").val(data.aula.id);
             },
             error: function () {
                 alert("Error al obtener los datos.");
             }
         });
-
-        $("#modalAdd").modal("show");
     }
 
-    function addUser() {
+    function addClase() {
         event.preventDefault();
-        var ciclista = {
+        var clase = {
             "nombre": $("#txtNombre").val(),
-            "direccion": $("#txtDireccion").val(),
-            "edad": $("#txtEdad").val(),
-            membresiaActiva: parseInt($("#ddlMembresia").val()),
+            "horario": $("#txtHorario").val(),
             "nivel": {
                 "id": parseInt($("#ddlNivel").val())
+            },
+            "aula": {
+                "id": parseInt($("#ddlAula").val())
             }
         }
-        $.ajax({
-            url: "http://localhost:8080/api/ciclistas/" + idciclista,
-            type: 'put',
-            data: JSON.stringify(ciclista),
-            Accept: "application/json",
-            contentType: "application/json",
-            dataType: "json",
-            success: function (data) {
-                alert("Empleado actualizado");
-                $("#modalAdd").modal("hide");
-                getAll();
-            },
-            error: function () {
-                // Muestra el mensaje de error en caso de error en la petición
-                alert("Error al actualizar");
-                $("#modalAdd").modal("hide");
-            }
-        });
+
+        if (update) {
+            $.ajax({
+                url: "http://localhost:8080/api/clases/" + idclase,
+                type: 'put',
+                data: JSON.stringify(clase),
+                Accept: "application/json",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    alert("Clase actualizada");
+                    $("#modalAdd").modal("hide");
+                    getAll();
+                },
+                error: function () {
+                    // Muestra el mensaje de error en caso de error en la petición
+                    alert("Error al actualizar");
+                    $("#modalAdd").modal("hide");
+                }
+            });
+
+        } else {
+            $.ajax({
+                url: "http://localhost:8080/api/clases",
+                type: 'post',
+                data: JSON.stringify(clase),
+                Accept: "application/json",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    alert("Clase agregada");
+                    $("#modalAdd").modal("hide");
+                    getAll();
+                },
+                error: function () {
+                    // Muestra el mensaje de error en caso de error en la petición
+                    alert("Error al agregar");
+                    $("#modalAdd").modal("hide");
+                }
+            });
+        }
 
 
     }
 
     function showDelete(id) {
-        idciclista = id;
+        idclase = id;
         $("#modalDelete").modal("show");
     }
 
-    function deleteUser() {
+    function deleteClase() {
 
         $.ajax({
-            url: "http://localhost:8080/api/ciclistas/" + idciclista,
+            url: "http://localhost:8080/api/clases/" + idclase,
             type: 'delete',
             success: function (data) {
-                alert("Usuario Eliminado");
+                alert("Clase Eliminada");
                 $("#modalAdd").modal("hide");
                 getAll();
             },
@@ -302,60 +337,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         $("#modalDelete").modal("hide");
     }
 
-    function buscarCiclista() {
-        var ciclista = {
-            nombre: $("#txtNombreBuscar").val()
-        }
 
-        $.ajax({
-            url: "http://localhost:8080/api/ciclistas/nombre",
-            type: 'post',
-            data: JSON.stringify(ciclista),
-            Accept: "application/json",
-            contentType: "application/json",
-            dataType: "json",
-            success: function (data) {
-                var resultsContainer = $("#contenido");
-                resultsContainer.empty();
-                var ciclistas = data;
-                $.each(ciclistas, function (index, ciclista) {
-                    var card = `
-                        <tr id="fila${index}"<>
-                                
-                                <td class="card-text">${ciclista.nombre}</td>
-                                <td class="card-title">${ciclista.direccion}</td>
-                                
-                                <td class="card-text">${ciclista.edad}</td>
-                                <td class="card-text">${ciclista.nivel.descripcion}</td>
-                                 <td class="card-text">${ciclista.membresiaActiva}</td>
-                               <td>
-                                <button onclick="showModalUpdate(${ciclista.id})" class="btn btn-warning btn-sm">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                            </td>
-                            <td>
-
-                              
-
-                                    <button onclick="showDelete(${ciclista.id})" class="btn btn-danger btn-sm"> <i class="bi bi-trash3-fill"></i></button>
-                                
-                            </td>
-                        </tr>
-                    `;
-
-                    resultsContainer.append(card);
-                });
-            },
-            error: function () {
-                // Muestra el mensaje de error en caso de error en la petición
-                alert("Error al buscar");
-                $("#modalAdd").modal("hide");
-            }
-        });
-
-
-
-    }
 
 
 

@@ -27,16 +27,35 @@ public class ClaseDAOImplementation {
         return this.iClaseDAO.findAll();
     }
     
+    public List<Clase> getAllByNivel(int id){
+        return this.iClaseDAO.findAllByNivelId(id);
+    }
+    
+    public Clase getById(int id){
+        return this.iClaseDAO.findById(id).orElse(null);
+    }
+    
     public Clase add(Clase clase){
         return this.iClaseDAO.save(clase);
     }
     
-    public boolean claseExistente(String horario){
-        Clase clase= this.iClaseDAO.findByHorarioEquals(horario);
-        if (clase!=null) {
-            return true;
+    public boolean claseExistente(Clase clase){
+        Clase newClase= this.iClaseDAO.findByHorarioEquals(clase.getHorario());
+        if (newClase!=null) {
+            if (newClase.getAula().getId()==clase.getAula().getId()) {
+                return true;
+            }
         }
         
         return false;
+    }
+    
+    public boolean exist(int id){
+        return this.iClaseDAO.existsById(id);
+    }
+    
+    
+    public void delete(int id){
+        this.iClaseDAO.deleteById(id);
     }
 }

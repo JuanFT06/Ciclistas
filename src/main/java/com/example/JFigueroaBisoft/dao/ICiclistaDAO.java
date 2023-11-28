@@ -14,4 +14,5 @@ import org.springframework.data.repository.ListCrudRepository;
  */
 public interface ICiclistaDAO extends ListCrudRepository<Ciclista, Integer>{
     List<Ciclista> findAllByNombreContainingIgnoreCase(String nombre);
+    List<Ciclista> findAllByNivelIdAndMembresiaActivaTrueAndClaseNull(int id);
 }

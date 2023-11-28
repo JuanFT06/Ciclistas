@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/clases")
-public class Clases {
+public class ClasesController {
     
     @GetMapping("")
     public String getAll(){
+        return "formClases";
+    }
+    @GetMapping("/all")
+    public String getAllLocal(){
         return "clases";
     }
 }

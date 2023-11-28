@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Lista de usuarios</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"><!--  -->
+        <!--     <link th:href="@{/styles.css}" rel="stylesheet" />-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    </head>
+    <header class="p-2 mb-5">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light p-2">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <p  class="nav-link text-white" >CicloStudio</p>
+                    </li>
+                    <li class="nav-item active">
+                        <a th:href="@{/ciclistas}" class="nav-link text-white" >Todos los ciclistas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/ciclistas/all}" class="nav-link text-white" >Ciclistas guardados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/clases}" class="nav-link text-white" >Clases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/clases/all}" class="nav-link text-white" >Administrar clases</a>
+                    </li>
+                   
+                </ul>
+            </div>
+                  
+
+        </nav>
+    </header>
+    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <div class="container mt-4" layout:fragment="body" style="min-height: 500px">
+            <div class="row jutify-content-center mb-4">
+
+                <div class="text-center">
+                    <button  class="btn btn-success" onclick="showModal()"><i class="bi bi-person-workspace"></i>+ Agregar</button>
+                </div>
+
+
+                <div class="row col-12 mt-5">
+                    <table  class="table table-striped mr-8">
+                        <thead>
+                            <tr>
+                                <th>Ciclista</th>
+                                <th>Nivel</th>
+                                <th>Clase</th>
+                                <th>Aula</th>
+                                <th>Horario</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contenido">
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<div id="modalAdd" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModal">Agregar clase</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="offset-3 col-6">
+                    <label class="mb-2">Nivel</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="bi bi-building"></i></div>
+                        </div>
+                        <select id="ddlNivel" required  class="form-control mb-4">
+                            <option value="0">Selleciona un nivel</option> 
+                            <option value="1">Novato</option> 
+                            <option value="2">Intermedio</option> 
+                            <option value="3">Avanzado</option> 
+                        </select>
+                    </div>
+                </div>
+
+                <div class="offset-3 col-6">
+                    <label class="mb-2">Clase</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="bi bi-building"></i></div>
+                        </div>
+                        <select id="ddlClase" required  class="form-control mb-4">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="offset-3 col-6">
+                    <label class="mb-2">Ciclistas</label>
+                    <table  class="table table-striped mr-8">
+                        <thead>
+                            <tr>
+                                <th>Ciclista</th>
+
+                                <th>Apuntar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listaCiclistas">
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="botonModal" onclick="guardarCiclistas()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        getAll();
+
+        $("#ddlNivel").change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/api/clases/getByNivel", // La URL del controlador
+                dataType: "json",
+                data: {idnivel: $("#ddlNivel").val()},
+                success: function (clases) {
+                    $("#ddlClase").empty();
+                    $("#ddlClase").append('<option value="0">' + 'Seleccione una clase' + '</option>');
+                    $.each(clases, function (i, clase) {
+                        $("#ddlClase").append('<option value="'
+                                + clase.id + '">'
+                                + clase.nombre + '</option>');
+                    });
+                },
+                error: function () {
+                    alert("Error al obtener los datos.");
+                }
+            });
+        });
+
+        $("#ddlClase").change(function () {
+            $.ajax({
+                type: "GET",
+                url: "/api/ciclistas/getByNivel", // La URL del controlador
+                dataType: "json",
+                data: {idnivel: $("#ddlNivel").val()},
+                success: function (ciclistas) {
+                    var resultsContainer = $("#listaCiclistas");
+                    resultsContainer.empty();
+                    $.each(ciclistas, function (index, ciclista) {
+
+                        var card = `
+                        <tr id="fila${index}"<>
+                                <td hidden='true'>${ciclista.id}</td>
+                                <td class="card-text">${ciclista.nombre}</td>
+                                <td><input type="checkbox" class="checkbox"></td>
+                              
+                               
+                        </tr>
+                    `;
+
+                        resultsContainer.append(card);
+
+                    });
+                },
+                error: function () {
+                    alert("Error al obtener los datos.");
+                }
+            });
+        });
+
+    });
+
+
+    function showModal() {
+        $("#modalAdd").modal("show");
+    }
+    function getAll() {
+
+        $.ajax({
+            url: "http://localhost:8080/api/ciclistas",
+            dataType: "json",
+            success: function (data) {
+
+                var resultsContainer = $("#contenido");
+                resultsContainer.empty();
+                var ciclistas = data;
+                $.each(ciclistas, function (index, ciclista) {
+                    if (ciclista.clase != null) {
+                        var card = `
+                        <tr id="fila${index}"<>
+                                
+                                <td class="card-text">${ciclista.nombre}</td>
+                                <td class="card-title">${ciclista.nivel.descripcion}</td>
+                                
+                                <td class="card-text">${ciclista.clase.nombre}</td>
+                                 <td class="card-text">${ciclista.clase.aula.nombre}</td>
+                                <td class="card-text">${ciclista.clase.horario}</td>
+                               
+                        </tr>
+                    `;
+
+                        resultsContainer.append(card);
+                    }
+                });
+                $("#errorContainer").hide();
+
+            }
+        });
+    }
+
+    function guardarCiclistas() {
+        var lista = [];
+        var idclase = $("#ddlClase").val();
+        $('#listaCiclistas tr').each(function () {
+            var checkbox = $(this).find('.checkbox');
+            if (checkbox.prop('checked')) {
+                var id = $(this).find('td:eq(0)').text();
+                lista.push(id);
+            }
+
+            $.ajax({
+                url: "http://localhost:8080/api/ciclistas/apendClass/" + idclase,
+                type: 'post',
+                data: JSON.stringify(lista),
+                Accept: "application/json",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    alert("Ciclistas agregados");
+                    $("#modalAdd").modal("hide");
+                    getAll();
+                },
+                error: function () {
+                    // Muestra el mensaje de error en caso de error en la petición
+                    alert("Error al agregar");
+                    $("#modalAdd").modal("hide");
+                }
+            });
+        });
+        console.log(lista);
+    }
+
+</script>
+</html>
